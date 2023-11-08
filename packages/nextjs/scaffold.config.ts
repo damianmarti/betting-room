@@ -2,7 +2,9 @@ import * as chains from "viem/chains";
 
 export type ScaffoldConfig = {
   targetNetwork: chains.Chain;
+  liveUrl: string;
   pollingInterval: number;
+  fromBlock: bigint;
   alchemyApiKey: string;
   walletConnectProjectId: string;
   onlyLocalBurnerWallet: boolean;
@@ -13,9 +15,13 @@ const scaffoldConfig = {
   // The network where your DApp lives in
   targetNetwork: chains.hardhat,
 
+  liveUrl: process.env.NEXT_PUBLIC_LIVE_URL || "http://localhost:3000",
+
   // The interval at which your front-end polls the RPC servers for new data
   // it has no effect on the local network
-  pollingInterval: 30000,
+  pollingInterval: 5000,
+
+  fromBlock: 1n,
 
   // This is ours Alchemy's default API key.
   // You can get your own at https://dashboard.alchemyapi.io

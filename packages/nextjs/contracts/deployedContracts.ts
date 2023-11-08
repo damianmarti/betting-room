@@ -4,6 +4,576 @@
  */
 import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 
-const deployedContracts = {} as const;
+const deployedContracts = {
+  31337: {
+    BettingRoom: {
+      address: "0x162A433068F51e18b7d13932F27e66a3f99E6890",
+      abi: [
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "roomHash",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "member",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "prize",
+              type: "uint256",
+            },
+          ],
+          name: "ClaimPrize",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "roomHash",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "member",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "refund",
+              type: "uint256",
+            },
+          ],
+          name: "ClaimRefund",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "roomHash",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "creator",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "resultContractAddress",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "betValue",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "betDeadline",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "resultDeadline",
+              type: "uint256",
+            },
+          ],
+          name: "RoomCreate",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "roomHash",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "member",
+              type: "address",
+            },
+          ],
+          name: "RoomJoin",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "roomHash",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "fetcher",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "tip",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "address[]",
+              name: "winners",
+              type: "address[]",
+            },
+          ],
+          name: "WinnersFetch",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "roomHash",
+              type: "address",
+            },
+          ],
+          name: "claimPrize",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "resultContractAddress",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "betValue",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "betDeadline",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "resultDeadline",
+              type: "uint256",
+            },
+          ],
+          name: "createRoom",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "resultContractAddress",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "betValue",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "betDeadline",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "resultDeadline",
+              type: "uint256",
+            },
+          ],
+          name: "createRoomAndJoin",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "fetchResultTipDiv",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "roomHash",
+              type: "address",
+            },
+          ],
+          name: "fetchWinners",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "roomHash",
+              type: "address",
+            },
+          ],
+          name: "joinRoom",
+          outputs: [],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "roomHash",
+              type: "address",
+            },
+          ],
+          name: "refundBet",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          name: "rooms",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "initialized",
+              type: "bool",
+            },
+            {
+              internalType: "uint8",
+              name: "membersCount",
+              type: "uint8",
+            },
+            {
+              internalType: "uint256",
+              name: "betDeadline",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "resultDeadline",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "winnersCount",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "creator",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "betValue",
+              type: "uint256",
+            },
+            {
+              internalType: "bool",
+              name: "winnersFetched",
+              type: "bool",
+            },
+            {
+              internalType: "uint256",
+              name: "balance",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "resultContractAddress",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+      ],
+    },
+    Game: {
+      address: "0x922D6956C99E12DFeB3224DEA977D0939758A1Fe",
+      abi: [
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "roomHash",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "member",
+              type: "address",
+            },
+          ],
+          name: "GameJoin",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          name: "gamesMembers",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "gameHash",
+              type: "address",
+            },
+          ],
+          name: "joinGame",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "roomHash",
+              type: "address",
+            },
+          ],
+          name: "winners",
+          outputs: [
+            {
+              internalType: "address[]",
+              name: "",
+              type: "address[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+      ],
+    },
+    YourContract: {
+      address: "0xB0D4afd8879eD9F52b28595d31B441D079B2Ca07",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "_owner",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "greetingSetter",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "newGreeting",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "premium",
+              type: "bool",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "value",
+              type: "uint256",
+            },
+          ],
+          name: "GreetingChange",
+          type: "event",
+        },
+        {
+          inputs: [],
+          name: "greeting",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "premium",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "_newGreeting",
+              type: "string",
+            },
+          ],
+          name: "setGreeting",
+          outputs: [],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "totalCounter",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          name: "userGreetingCounter",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "withdraw",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          stateMutability: "payable",
+          type: "receive",
+        },
+      ],
+    },
+  },
+} as const;
 
 export default deployedContracts satisfies GenericContractsDeclaration;

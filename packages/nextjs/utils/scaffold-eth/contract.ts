@@ -81,7 +81,7 @@ export type AbiFunctionOutputs<TAbi extends Abi, TFunctionName extends string> =
 
 export type AbiFunctionReturnType<TAbi extends Abi, TFunctionName extends string> = IsContractDeclarationMissing<
   any,
-  AbiParametersToPrimitiveTypes<AbiFunctionOutputs<TAbi, TFunctionName>>[0]
+  AbiParametersToPrimitiveTypes<AbiFunctionOutputs<TAbi, TFunctionName>>
 >;
 
 export type AbiEventInputs<TAbi extends Abi, TEventName extends ExtractAbiEventNames<TAbi>> = ExtractAbiEvent<
@@ -198,7 +198,7 @@ export type UseScaffoldEventConfig<
   }
 >;
 
-type IndexedEventInputs<
+export type IndexedEventInputs<
   TContractName extends ContractName,
   TEventName extends ExtractAbiEventNames<ContractAbi<TContractName>>,
 > = Extract<AbiEventInputs<ContractAbi<TContractName>, TEventName>[number], { indexed: true }>;
@@ -224,6 +224,7 @@ export type UseScaffoldEventHistoryConfig<
   TBlockData extends boolean = false,
   TTransactionData extends boolean = false,
   TReceiptData extends boolean = false,
+  TRequiredFilters extends IndexedEventInputs<TContractName, TEventName>["name"][] = [],
 > = {
   contractName: TContractName;
   eventName: IsContractDeclarationMissing<string, TEventName>;
@@ -232,6 +233,8 @@ export type UseScaffoldEventHistoryConfig<
   blockData?: TBlockData;
   transactionData?: TTransactionData;
   receiptData?: TReceiptData;
+  watch?: boolean;
+  requiredFilters?: TRequiredFilters;
 };
 
 export type UseScaffoldEventHistoryData<

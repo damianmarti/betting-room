@@ -1,27 +1,29 @@
 import Link from "next/link";
 import type { NextPage } from "next";
+import { formatUnits } from "viem";
 import { useAccount } from "wagmi";
 import { BettingRoomAddress } from "~~/components/BettingRoomAddress";
 import { MetaHeader } from "~~/components/MetaHeader";
+import { Address } from "~~/components/scaffold-eth";
 import { useScaffoldEventHistory } from "~~/hooks/scaffold-eth";
 import scaffoldConfig from "~~/scaffold.config";
 
-const Home: NextPage = () => {
+const Rooms: NextPage = () => {
   const { address } = useAccount();
 
   const {
-    data: roomJoinEvents,
-    isLoading: isLoadingRoomJoinEvents,
-    error: errorReadingRoomJoinEvents,
+    data: roomCreateEvents,
+    isLoading: isLoadingRoomCreateEvents,
+    error: errorReadingRoomCreateEvents,
   } = useScaffoldEventHistory({
     contractName: "BettingRoom",
-    eventName: "RoomJoin",
+    eventName: "RoomCreate",
     fromBlock: scaffoldConfig.fromBlock,
-    filters: { member: address },
-    requiredFilters: ["member"],
+    filters: { creator: address },
+    requiredFilters: ["creator"],
   });
 
-  console.log("roomJoinEvents", roomJoinEvents);
+  console.log("roomCreateEvents", roomCreateEvents);
 
   return (
     <>
@@ -29,7 +31,7 @@ const Home: NextPage = () => {
       <div className="flex items-center flex-col flex-grow pt-10">
         <div className="px-5">
           <h1 className="text-center mb-4">
-            <span className="block text-4xl font-bold mb-2">Rooms Joined</span>
+            <span className="block text-4xl font-bold mb-2">Rooms Created</span>
             <button className="btn btn-primary btn-sm">
               <Link href="/create-room">Create Room</Link>
             </button>
@@ -38,9 +40,9 @@ const Home: NextPage = () => {
 
         <div className="flex-grow bg-base-300 w-full mt-4 px-8 py-12">
           <div className="flex grid grid-cols-5 justify-center items-center gap-12 flex-col sm:flex-row">
-            {isLoadingRoomJoinEvents || errorReadingRoomJoinEvents
+            {isLoadingRoomCreateEvents || errorReadingRoomCreateEvents
               ? "Loading..."
-              : roomJoinEvents?.map((event, index) => {
+              : roomCreateEvents?.map((event, index) => {
                   return (
                     <div
                       key={index}
@@ -48,6 +50,18 @@ const Home: NextPage = () => {
                     >
                       <p>
                         Room: <BettingRoomAddress address={event.log.args.roomHash} />
+                      </p>
+                      <p>Bet: Ξ{event.log.args.betValue ? formatUnits(event.log.args.betValue, 18) : 0}</p>
+                      <p>
+                        Bet Deadline: block{" "}
+                        {event.log.args.betDeadline ? formatUnits(event.log.args.betDeadline, 0) : 0}
+                      </p>
+                      <p>
+                        Claim Prize Deadline: block{" "}
+                        {event.log.args.resultDeadline ? formatUnits(event.log.args.resultDeadline, 0) : 0}
+                      </p>
+                      <p>
+                        Game: <Address address={event.log.args.resultContractAddress} />
                       </p>
                     </div>
                   );
@@ -59,4 +73,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default Rooms;

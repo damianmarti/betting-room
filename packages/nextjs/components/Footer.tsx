@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { hardhat } from "viem/chains";
+import { useBlockNumber } from "wagmi";
 import { CurrencyDollarIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { HeartIcon } from "@heroicons/react/24/outline";
 import { SwitchTheme } from "~~/components/SwitchTheme";
@@ -15,6 +16,8 @@ import { getTargetNetwork } from "~~/utils/scaffold-eth";
 export const Footer = () => {
   const nativeCurrencyPrice = useGlobalState(state => state.nativeCurrencyPrice);
   const isLocalNetwork = getTargetNetwork().id === hardhat.id;
+
+  const { data: blockNumber, isError: isErrorBlockNumber, isLoading: isLoadingBlockNumber } = useBlockNumber();
 
   return (
     <div className="min-h-0 py-5 px-1 mb-11 lg:mb-0">
@@ -38,6 +41,7 @@ export const Footer = () => {
                 </Link>
               </>
             )}
+            <div>BlockNumber: {isErrorBlockNumber || isLoadingBlockNumber ? "..." : blockNumber?.toString()}</div>
           </div>
           <SwitchTheme className={`pointer-events-auto ${isLocalNetwork ? "self-end md:self-auto" : ""}`} />
         </div>
