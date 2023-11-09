@@ -1,3 +1,40 @@
+# Betting Room
+
+This build allows the creation of a betting room for a game. 
+
+- The user can create a room, setting the bet value and the game contract address. 
+- Share the link to the room and other users can join, betting that he will win the game.
+- After the bet deadline is reached, one user can fetch the winners from the game contract and get a tip for this.
+- All the winners can claim the pot (if multiple winners, the pot is split).
+- After the claim prize deadline, the users can claim a bet refund, if there is any balance in the room.
+
+The Game contract only must implement this interface:
+
+```
+interface IGameResult {
+	function winners(address roomHash) external view returns (address[] memory);
+}
+```
+
+## Screenshoots
+
+![localhost_3000_rooms_0xB400a0b81345Ad4362c80A1a8d3A4700Baf6C281](https://github.com/damianmarti/betting-room/assets/466652/e6cd26d8-1c1e-42e0-95e9-52db5079739e)
+
+![localhost_3000_rooms_0xB400a0b81345Ad4362c80A1a8d3A4700Baf6C281 (1)](https://github.com/damianmarti/betting-room/assets/466652/b56a5cda-fc5a-4431-a788-54ed45413eb0)
+
+## BTF show off video
+
+[![BettingRoom](https://img.youtube.com/vi/CeKLD-lhPBo/0.jpg)](https://www.youtube.com/watch?v=CeKLD-lhPBo&t=2487s)
+
+## Future work
+
+- Allow to bet on other players.
+- Widget or something to embed the app on the game.
+- Chat for users.
+- Some kind of shareable game ID implemented on each game.
+- Other?
+
+
 # 🏗 Scaffold-ETH 2
 
 <h4 align="center">
